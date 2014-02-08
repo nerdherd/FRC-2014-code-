@@ -29,10 +29,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
  *  - TeleopInit()     -- called each and every time teleop is entered from another mode
  *  - TestInit()       -- called each and every time test mode is entered from anothermode
  *
- * Periodic() functions -- each of these functions is called iteratively at the
- *                         appropriate periodic rate (aka the "slow loop").  The period of
- *                         the iterative robot is synced to the driver station control packets,
- *                         giving a periodic frequency of about 50Hz (50 times per second).
+ * Periodic() functions -- 
  *   - disabledPeriodic()
  *   - autonomousPeriodic()
  *   - teleopPeriodic()
@@ -91,6 +88,7 @@ public class NerdyBot extends RobotBase {
 
         // loop forever, calling the appropriate mode-dependent function
         LiveWindow.setEnabled(false);
+        m_mainPeriodicTimer.start();
         while (true) {
             if (TRACE_LOOP_ALLOCATIONS && disabledPacketHandled && autonomousPacketHandled && teleopPacketHandled && --loopCount <= 0) {
                 System.out.println("!!!!! Stop loop!");
@@ -183,7 +181,8 @@ public class NerdyBot extends RobotBase {
                         getWatchdog().feed();
                         FRCControl.observeUserProgramTeleop();
                         teleopHandlePacket();
-                        teleopPacketHandled = true;                    }
+                        teleopPacketHandled = true;                    
+                    }
                 }
             }
 
